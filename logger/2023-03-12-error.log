@@ -1,0 +1,17 @@
+{
+  err: "Cannot read property '0' of undefined",
+  stack: "TypeError: Cannot read property '0' of undefined\n" +
+    '    at createGallery (file:///F:/Ajay%20projects/jockey/jockey-backend/controllers/propertyController.js:52:71)\n' +
+    '    at Layer.handle [as handle_request] (F:\\Ajay projects\\jockey\\jockey-backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n' +
+    '    at next (F:\\Ajay projects\\jockey\\jockey-backend\\node_modules\\express\\lib\\router\\route.js:144:13)\n' +
+    '    at done (F:\\Ajay projects\\jockey\\jockey-backend\\node_modules\\multer\\lib\\make-middleware.js:45:7)\n' +
+    '    at indicateDone (F:\\Ajay projects\\jockey\\jockey-backend\\node_modules\\multer\\lib\\make-middleware.js:49:68)\n' +
+    '    at F:\\Ajay projects\\jockey\\jockey-backend\\node_modules\\multer\\lib\\make-middleware.js:155:11\n' +
+    '    at WriteStream.<anonymous> (F:\\Ajay projects\\jockey\\jockey-backend\\node_modules\\multer\\storage\\disk.js:43:9)\n' +
+    '    at WriteStream.emit (node:events:377:35)\n' +
+    '    at finish (node:internal/streams/writable:749:10)\n' +
+    '    at finishMaybe (node:internal/streams/writable:730:9)',
+  name: 'TypeError',
+  level: '\x1B[31merror\x1B[39m',
+  timestamp: '2023-03-12 14:06:41'
+}
