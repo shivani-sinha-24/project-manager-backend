@@ -1,15 +1,11 @@
 import User from "../models/userModel.js";
-import Teamleader from "../models/userteamleaderModel.js";
-import Status from "../models/statusModel.js";
 import Validator from "validatorjs";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import reply from '../common/reply.js';
-import Token from '../models/tokenModel.js';
 import crypto from 'crypto';
 import Mail from "../common/Mail.js";
 import moment from "moment";
-import College from "../models/collegeModel.js";
 import bodyParser from "body-parser";
 
 function createPassword() {

@@ -1,4 +1,7 @@
 import ProjectCardList from "../models/toDoCardListModal.js";
+import User from "../models/userModel.js";
+import Mail from "../common/Mail.js";
+
 
 export default {
 
@@ -21,7 +24,7 @@ export default {
     // Get Colleges Category
     async getProjectCardList(req, res) {
         try {
-            let projectCardsList= await ProjectCardList.find();
+            let projectCardsList = await ProjectCardList.find();
             return res.status(200).json(projectCardsList);
         } catch (err) {
             return res.status(400).send({ message: "Unable to fetch project card lists datails!" })
@@ -63,7 +66,22 @@ export default {
         } catch (err) {
             return res.status(400).send(err)
         }
-    }
+    },
+
+    //College Category create
+    async sendMailForProjectInvitation(req, res) {
+        let request = req.body;
+        let exist = await User.findOne({ "name": request.email });
+        if (exist) {
+            Mail.send(request.email, "" + `You are added into new project: "${request.projectName}"`);
+        }
+        try {
+            Mail.send(request.email, "" + `Register First`);
+        } catch (err) {
+            return res.status(400).send({ message: "Something Went Wrong!" })
+        }
+    },
+
 
 
 }
