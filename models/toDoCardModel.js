@@ -10,6 +10,10 @@ const projectCardSchema = new mongoose.Schema({
     },
     project_id: {
         type: String
+    },
+    items:{
+        type:[],
+        default:[]
     }
 
 },

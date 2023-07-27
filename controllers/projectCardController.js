@@ -11,7 +11,8 @@ export default {
         }
         try {
             let projectCard = await ProjectCard.create(request);
-            return res.status(200).send({ status_code: 200, projectCard: projectCard, message: "Project Card created successfully." });
+            let projects = await ProjectCard.find({})
+            return res.status(200).send({ status_code: 200, projectCard: projects, message: "Project Card created successfully." });
         } catch (err) {
             return res.status(400).send({ message: "Something Went Wrong!" })
         }

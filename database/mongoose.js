@@ -6,6 +6,7 @@ const mongo_url = process.env.MONGO_URI;
 const conf = () => {
     
     //mongoose.connect('mongodb://localhost/admissionjockey');
+    mongoose.set("strictQuery", false);
     mongoose.connect(mongo_url);
     // mongoose.connect('mongodb://localhost/edudb');
     const db= mongoose.connection;
