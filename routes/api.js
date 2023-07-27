@@ -4,6 +4,7 @@ import Authentication from "../middleware/auth.js";
 import roleAuth from "../middleware/roleAuth.js";
 import ProjectController from "../controllers/projectController.js";
 import ProjectCardController from "../controllers/projectCardController.js";
+import ListItemController from "../controllers/ListItemController.js";
 import ProjectCardListController from "../controllers/projectCardListController.js";
 import multer from 'multer';
 import bodyParser from 'body-parser';
@@ -181,6 +182,27 @@ Router.delete("/deleteProject", Authentication, ProjectController.deleteProject)
 
 //Send mail for the register.
 Router.post("/sendMailForProject",Authentication,ProjectCardListController.sendMailForProjectInvitation);
+
+
+
+//PROJECT ROUTES
+Router.post("/createProject",  ProjectController.createProject);
+Router.put("/updateProject",  ProjectController.updateProject);
+Router.delete("/deleteProject",  ProjectController.deleteProject);
+
+
+//PROJECT LIST ROUTES
+Router.get("/getProjectCard",  ProjectCardController.getProjectCard);
+Router.post("/createProjectCard",  ProjectCardController.createProjectCard);
+Router.put("/updateProjectCards",  ProjectCardController.updateProjectCards);
+Router.delete("/deleteProjectCards",  ProjectCardController.deleteProjectCards);
+
+
+// LIST ITEMS Routes
+Router.get("/getListItem",  ListItemController.getListItem);
+Router.post("/createtListItem",  ListItemController.createtListItem);
+Router.put("/updatetListItem",  ListItemController.updatetListItem);
+Router.delete("/deleteListItem",  ListItemController.deleteListItem);
 
 
 export default Router;
