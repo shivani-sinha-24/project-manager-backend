@@ -16,7 +16,7 @@ export default {
     async createtListItem(req, res) {
         const request = req.body;
         try {
-          const exist = await ListItem.findOne({ name: request.name });
+          const exist = await ListItem.findOne({ name: request.name,list_id:request.list_id });
           if (exist) {
             return res.status(200).send({ message: 'This name already exists!' });
           }

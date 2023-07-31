@@ -192,7 +192,8 @@ Router.delete("/deleteProject",  ProjectController.deleteProject);
 
 
 //PROJECT LIST ROUTES
-Router.get("/getProjectCard",  ProjectCardController.getProjectCard);
+Router.get("/getProjectCard/:id",  ProjectCardController.getProjectCard);
+Router.get("/getSampleProjectCard",  ProjectCardController.getSampleProjectCard);
 Router.post("/createProjectCard",  ProjectCardController.createProjectCard);
 Router.put("/updateProjectCards",  ProjectCardController.updateProjectCards);
 Router.delete("/deleteProjectCards",  ProjectCardController.deleteProjectCards);
