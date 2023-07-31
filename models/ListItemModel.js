@@ -42,6 +42,10 @@ const listItemSchema = new mongoose.Schema({
     tasks_date:{
         type:String,
         default:''
+    },
+    sub_task:{
+        type:[],
+        default:[]
     }
 },
 

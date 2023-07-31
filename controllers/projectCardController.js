@@ -1,3 +1,4 @@
+import ListItem from "../models/ListItemModel.js";
 import ProjectCard from "../models/toDoCardModel.js";
 
 export default {
@@ -21,9 +22,31 @@ export default {
 
     // Get Colleges Category
     async getProjectCard(req, res) {
+        const id =req.params?.id
         try {
-            let projectCards= await ProjectCard.find();
+            let projectCards= await ProjectCard.find({project_id:id});
             return res.status(200).json(projectCards);
+        } catch (err) {
+            return res.status(400).send({ message: "Unable to fetch project cards datails!" })
+        }
+    },
+
+    //Get Sample Project Card
+    async getSampleProjectCard(req, res) {
+        try {
+            const sampleProjectCard = await ProjectCard.find({name:'Sample List'})
+            if(sampleProjectCard.length){
+                return res.status(200).json(sampleProjectCard);
+            }else{
+                const newSamplePreojectCard =await ProjectCard.create({name:'Sample List'});
+                const sampleListItem1 = await ListItem.create({name:'List item 1',list_id:newSamplePreojectCard._id})
+                const sampleListItem2 = await ListItem.create({name:'List item 2',list_id:newSamplePreojectCard._id})
+                const sampleListItem3 = await ListItem.create({name:'List item 3',list_id:newSamplePreojectCard._id})
+                const updatedNewSampleProjectCard = await ProjectCard.findOneAndUpdate({_id:newSamplePreojectCard._id}, { $set: { items: [sampleListItem1._id, sampleListItem2._id,sampleListItem3._id] } }, {new :true})
+                const sample = await ProjectCard.find({name:'Sample List'});
+                // console.log('sample :',sample);
+                res.status(200).json(sample)
+            }
         } catch (err) {
             return res.status(400).send({ message: "Unable to fetch project cards datails!" })
         }

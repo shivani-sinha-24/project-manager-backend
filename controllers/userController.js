@@ -7,6 +7,7 @@ import crypto from 'crypto';
 import Mail from "../common/Mail.js";
 import moment from "moment";
 import bodyParser from "body-parser";
+import Token from "../models/tokenModel.js";
 
 function createPassword() {
 
@@ -40,10 +41,11 @@ export default {
         request.image = req?.file == undefined ? null : req?.file?.filename != undefined && req?.file?.filename;
 
         let validation = new Validator(request, {
-            name: 'required|string',
+            fullName: 'required|string',
             email: 'required|email',
-            contact_no: 'required',
-            password: 'required_if:role,0|min:8|same:confirm_password',
+            // contact_no: 'required',
+            // password: 'required_if:role,0|min:8|same:confirm_password',
+            password: 'required|min:8',
         });
 
         if (validation.fails()) {
@@ -56,21 +58,23 @@ export default {
         }
         try {
 
-            if (request.role != 0) {
+            // if (request.role != 0) {
+            if(!exist){
+                
                 let user_email = request.email
                 // let random_password = createPassword()
                 let hash_password = bcrypt.hashSync(user_email);
                 // Mail.send(user_email, "" + `This is your password "${random_password}"`);
 
-                if ((exist && exist.is_deleted == true) || !exist) {
-                    request.password = hash_password
-                    let updated = await User.create(request);
-                    return res.json(reply.success("User Created Successfully!!", updated));
-                }
+                // if ((exist && exist.is_deleted == true) || !exist) {
+                //     request.password = hash_password
+                //     let updated = await User.create(request);
+                //     return res.json(reply.success("User Created Successfully!!", updated));
+                // }
+                request.password = bcrypt.hashSync(request.password);
+                const user = await User.create(request)
+                return res.json(reply.success("User Created Successfully!!", user));
             }
-            request.password = bcrypt.hashSync(request.password);
-            const user = await User.create(request)
-            return res.json(reply.success("User Created Successfully!!", user));
 
         } catch (err) {
             console.log("err", err)
@@ -121,7 +125,7 @@ export default {
 
             await Token.create({ token_id, user_id: user._id });
             const { password, ...responseUser } = user._doc
-            return res.json(reply.success("Login Successfully!!", { responseUser, token: token }))
+            return  res.json(reply.success("Login Successfully!!", { responseUser, token: token }))
 
         } catch (err) {
             console.log("err", err)

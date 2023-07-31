@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-    name: {
+    fullName: {
         required: true,
         type: String
     },
@@ -9,32 +9,32 @@ const userSchema = new mongoose.Schema({
         type: String,
         allowNull: false
     },
-    contact_no: {
-        type: String,
-        allowNull: false
-    },
+    // contact_no: {
+    //     type: String,
+    //     allowNull: false
+    // },
     password: {
         type: String
     },
-    status: {
-        type: String,
-        default: "Active",
-    },
-    image: {
-        type: String,
-    },
-    role: {
-        type: String,
-    },
-    otp: {
-        type: String
-    },
-    description:{
-        type: String,
-    },
-    permissions:{
-        type:Object
-    }
+    // status: {
+    //     type: String,
+    //     default: "Active",
+    // },
+    // image: {
+    //     type: String,
+    // },
+    // role: {
+    //     type: String,
+    // },
+    // otp: {
+    //     type: String
+    // },
+    // description:{
+    //     type: String,
+    // },
+    // permissions:{
+    //     type:Object
+    // }
 },
 
     { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
