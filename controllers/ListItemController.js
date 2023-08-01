@@ -45,19 +45,19 @@ export default {
     async updatetListItem (req,res){
 
         console.log(req.body);
-        const {name,_id,projects,due_date,status,description,priority,assignee,task_date} = req.body;
+        const request = req?.body
+        const {name,_id,projects,due_date,status,description,priority,assignee,tasks_date,comments,sub_task} = req.body;
         if(name){
           const listItem = await ListItem.findOneAndUpdate({_id:_id},{name},{ new: true })
         }
-        // if(projects){
-        //   const listItem = await ListItem.findOneAndUpdate({_id:_id},{projects},{ new: true })
-        // }    // needed to be corrected as it's an array
+        if(projects){
+          const listItem = await ListItem.findOneAndUpdate({_id:_id},{projects},{ new: true })
+        }    // needed to be corrected as it's an array
         if(due_date){
           const listItem = await ListItem.findOneAndUpdate({_id:_id},{due_date},{ new: true })
         }
-        
-        if(task_date){
-          const listItem = await ListItem.findOneAndUpdate({_id:_id},{tasks_date:task_date},{ new: true })
+        if(tasks_date){
+          const listItem = await ListItem.findOneAndUpdate({_id:_id},{tasks_date},{ new: true })
         }
         if(status){
           const listItem = await ListItem.findOneAndUpdate({_id:_id},{status},{ new: true })
@@ -71,8 +71,17 @@ export default {
         if(priority){
           const listItem = await ListItem.findOneAndUpdate({_id:_id},{priority},{ new: true })
         }
+        if(sub_task){
+          const listItem = await ListItem.findOneAndUpdate({_id:_id},{ $push: { sub_task: sub_task[0] } },{ new: true })
+        }
+        if(comments){
+          // console.log('comments :',comments);
+          const listItem = await ListItem.findOneAndUpdate({_id:_id},{comments},{ new: true })
+        }
 
-        // console.log(listItem);
+        const listItems = await ListItem.find({})
+        const lists = await ProjectCard.find({})
+        res.status(200).send({listItems:listItems,lists:lists})
         
     },
 
