@@ -5,51 +5,54 @@ const listItemSchema = new mongoose.Schema({
         type: String
     },
     list_id: {
-        type:String
+        type: String
     },
-    name:{
-        type:String,
+    name: {
+        type: String,
         required: true,
     },
-    assignee:{
-        type:String,
-        default:''
+    assignee: {
+        type: String,
+        default: ''
     },
-    due_date:{
-        type:String,
-        default:''
+    due_date: {
+        type: String,
+        default: ''
     },
-    projects:{
-        type:[],
-        default:[]
+    projects: {
+        type: [],
+        default: []
     },
-    priority:{
-        type:String,
-        default:''
+    priority: {
+        type: String,
+        default: ''
     },
-    status:{
-        type:String,
-        default:''
+    workStatus: {
+        type: String,
     },
-    description:{
-        type:String,
-        default:''
+    status: {
+        type: String,
+        default: ''
     },
-    comments:{
-        type:[],
-        default:[]
+    description: {
+        type: String,
+        default: ''
     },
-    tasks_date:{
-        type:String,
-        default:''
+    comments: {
+        type: [],
+        default: []
     },
-    sub_task:{
-        type:[],
-        default:[]
+    tasks_date: {
+        type: String,
+        default: ''
+    },
+    sub_task: {
+        type: [],
+        default: []
     }
 },
 
-{ timestamps: {createdAt: 'created_at',updatedAt: 'updated_at'} })
+    { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 
 const ListItem = mongoose.model('ListItem', listItemSchema)
 
