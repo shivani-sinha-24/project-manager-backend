@@ -186,9 +186,11 @@ Router.post("/sendMailForProject",Authentication,ProjectCardListController.sendM
 
 
 //PROJECT ROUTES
+Router.get('/getProject', ProjectController.getProject)
 Router.post("/createProject",  ProjectController.createProject);
 Router.put("/updateProject",  ProjectController.updateProject);
 Router.delete("/deleteProject",  ProjectController.deleteProject);
+Router.get('/get-project/:projectName', ProjectController.getProjectByName)
 
 
 //PROJECT LIST ROUTES
