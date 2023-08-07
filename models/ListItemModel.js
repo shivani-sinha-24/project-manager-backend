@@ -30,6 +30,9 @@ const listItemSchema = new mongoose.Schema({
     workStatus: {
         type: String,
     },
+    assigneeStatus: {
+        type: String,
+    },
     status: {
         type: String,
         default: ''

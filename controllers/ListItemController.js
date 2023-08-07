@@ -35,7 +35,6 @@ export default {
         lists: lists,
         message: 'List item created successfully.',
       });
-
     } catch (error) {
       return res.status(400).send({ message: error.message });
     }
@@ -49,10 +48,11 @@ export default {
     if (!exist) {
       return res.status(404).send({ message: "List Not Found !!" })
     }
-    await ListItem.findByIdAndUpdate(id, request, { new: true })
-    return res.status(200).send({ status_code: 200, project: request, message: "List updated successfully." });
+    await ListItem.findByIdAndUpdate(id, request, { new: true });
+    let listItem = await ListItem.find();
+    return res.status(200).json(listItem);
+    // return res.status(200).send({ status_code: 200, project: request, message: "List updated successfully." });
   },
-
   // delete ListItem
   async deleteListItem(req, res) {
 
