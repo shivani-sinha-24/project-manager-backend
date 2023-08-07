@@ -73,7 +73,7 @@ export default {
                 // }
                 request.password = bcrypt.hashSync(request.password);
                 const user = await User.create(request)
-                return res.json(reply.success("User Created Successfully!!", user));
+                return res.json(reply.success("User Created Successfully!!", {user}));
             }
 
         } catch (err) {
