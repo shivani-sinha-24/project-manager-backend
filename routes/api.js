@@ -9,6 +9,8 @@ import ProjectCardListController from "../controllers/projectCardListController.
 import multer from 'multer';
 import bodyParser from 'body-parser';
 import fs from "fs";
+import InvitationController from "../controllers/InvitationController.js";
+import userController from "../controllers/userController.js";
 
 
 const Router = express.Router();
@@ -206,5 +208,16 @@ Router.post("/createtListItem",  ListItemController.createtListItem);
 Router.put("/updatetListItem",  ListItemController.updatetListItem);
 Router.delete("/deleteListItem",  ListItemController.deleteListItem);
 
+// Project Invitatio
+Router.post('/share', InvitationController.share)
+Router.post('/accept-invitation', InvitationController.accept)
+Router.post('/reject-invitation', InvitationController.reject)
+
+// Get User
+Router.get('/user/:email',userController.getUserByEmail)
+
+//Drag and Drop 
+Router.put(`/updateMultiList`,ProjectCardController.updateMultiList)
+Router.put(`/updatetSingleList`,ProjectCardController.updatetSingleList)
 
 export default Router;

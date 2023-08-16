@@ -8,6 +8,7 @@ import Mail from "../common/Mail.js";
 import moment from "moment";
 import bodyParser from "body-parser";
 import Token from "../models/tokenModel.js";
+import Invitation from "../models/Invitation.js";
 
 function createPassword() {
 
@@ -73,7 +74,12 @@ export default {
                 // }
                 request.password = bcrypt.hashSync(request.password);
                 const user = await User.create(request)
-                return res.json(reply.success("User Created Successfully!!", {user}));
+                var token_id = makeid();
+                let token = jwt.sign({ "user_id": user._id, "tid": token_id }, process.env.SECRET_KEY, { expiresIn: "24h" });
+                await Token.create({ token_id, user_id: user._id });
+
+                return res.json(reply.success("User Created Successfully!!", {user,token}));
+                
             }
 
         } catch (err) {
@@ -1020,6 +1026,24 @@ export default {
 
     },
 
+    async getUserByEmail (req,res) {
+        try {
+            const user = await User.findOne({email:req?.params?.email})
+            if(user){
+                // check whether use is invited or not
+                const existing_invitation = await Invitation.findOne({   
+                    invited_user:req?.params?.email
+                })
+                if(existing_invitation){
+                    return res.status(200).send({user,invitation:existing_invitation})
+                }else{
+                    return res.status(200).send({user})
+                }
+            }
+        } catch (error) {
+            return res.status(400).send(error)
+        }
+    },
 
 
 }

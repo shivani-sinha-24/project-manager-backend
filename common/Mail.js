@@ -19,7 +19,7 @@ export default {
         let mailOptions = {
             from: process.env.MAIL_FROM_ADDRESS, // sender address
             to: to, // list of receivers
-            subject: 'Test', // Subject line
+            subject: 'Invitation to Join Dousoft Working Team', // Subject line
             text: message, // plain text body
             html: '<b>'+message+'</b>' // html body
         };
