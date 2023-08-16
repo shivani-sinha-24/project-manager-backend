@@ -19,7 +19,8 @@ const userSchema = new mongoose.Schema({
     projects_assigned:{
         type: [],
         default: []
-    }
+    },
+    type:{type: String}
     // status: {
     //     type: String,
     //     default: "Active",

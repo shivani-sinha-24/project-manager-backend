@@ -90,41 +90,77 @@ export default {
 
     // user login:
     async userLogin(req, res) {
-        let request = req.body;
-        if (Object.keys(request).length == 0) {
-            return res.json(reply.failed("All input is required!"))
-        }
-        let validation = new Validator(request, {
-            email: 'required|email',
-            password: 'required',
-
-        });
-        if (validation.fails()) {
-            let err_key = Object.keys(Object.entries(validation.errors)[0][1])[0];
-            return res.json(reply.failed(validation.errors.first(err_key)));
-        }
-
         try {
-            const user = await User.findOne({ email: request.email.toString().toLowerCase() });
-            if (!user) {
-                return res.json(reply.failed("The selected email is invalid"))
+            if (Object.keys(req?.body).length == 0) {
+                return res.json(reply.failed("All input is required!"))
+            }
+            if(req?.body?.type=="Google Auth"){
+                let request = req?.body;
+                // let validation = new Validator(request, {
+                //     email: 'required|email',    
+                // });
+                // if (validation.fails()) {
+                //     let err_key = Object.keys(Object.entries(validation.errors)[0][1])[0];
+                //     return res.json(reply.failed(validation.errors.first(err_key)));
+                // }
+    
+                const user = await User.findOne({ email: request.email.toString().toLowerCase() });
+                if (!user) {
+                    // return res.json(reply.failed("User does not exist!"))
+                    // const newUser = await  User.create({request})
+                    const newUser = await  User.create({
+                        fullName:req?.body?.name,
+                        email:req?.body?.email,
+                        type:req?.body?.type
+                    })
+                    var token_id = makeid();
+                    let token = jwt.sign({ "user_id": newUser._id, "tid": token_id }, process.env.SECRET_KEY, { expiresIn: "24h" });
+                    await Token.create({ token_id, user_id: newUser._id });
+                    const {...responseUser } = newUser._doc
+                    return  res.json(reply.success("Login Successfully!!", { responseUser, token: token ,status_code:"200"}))
+                }else{
+                    var token_id = makeid();
+                    let token = jwt.sign({ "user_id": user._id, "tid": token_id }, process.env.SECRET_KEY, { expiresIn: "24h" });
+                    await Token.create({ token_id, user_id: user._id });
+                    const {...responseUser } = user._doc
+                    return  res.json(reply.success("Login Successfully!!", { responseUser, token: token ,status_code:"200"}))
+                }
             }
 
-            if ((!user || user.is_deleted == true)) {
-                return res.json(reply.failed('User does not exist!'));
+            if(req?.body?.type=="Email"){
+                let request = req.body;
+                console.log(req?.body);
+                let validation = new Validator(request, {
+                    email: 'required|email',
+                    password: 'required',
+        
+                });
+                if (validation.fails()) {
+                    let err_key = Object.keys(Object.entries(validation.errors)[0][1])[0];
+                    return res.json(reply.failed(validation.errors.first(err_key)));
+                }
+    
+                const user = await User.findOne({ email: req?.body?.email});
+                if (!user) {
+                    return res.json(reply.failed("The selected email is invalid"))
+                }
+    
+                if ((!user || user.is_deleted == true)) {
+                    return res.json(reply.failed('User does not exist!'));
+                }
+                if (user.tab_status == "Inactive") {
+                    return res.json(reply.failed("Sorry! Your Acount is deactivated"));
+                }
+                const passwordIsvalid = bcrypt.compareSync(request.password, user.password);
+                if (!passwordIsvalid) {
+                    return res.json(reply.failed("Password Incorrect!"));
+                }
+                var token_id = makeid();
+                let token = jwt.sign({ "user_id": user._id, "tid": token_id }, process.env.SECRET_KEY, { expiresIn: "24h" });
+                await Token.create({ token_id, user_id: user._id });
+                const { password, ...responseUser } = user._doc
+                return  res.json(reply.success("Login Successfully!!", { responseUser, token: token ,status_code:"200"}))
             }
-            if (user.tab_status == "Inactive") {
-                return res.json(reply.failed("Sorry! Your Acount is deactivated"));
-            }
-            const passwordIsvalid = bcrypt.compareSync(request.password, user.password);
-            if (!passwordIsvalid) {
-                return res.json(reply.failed("Password Incorrect!"));
-            }
-            var token_id = makeid();
-            let token = jwt.sign({ "user_id": user._id, "tid": token_id }, process.env.SECRET_KEY, { expiresIn: "24h" });
-            await Token.create({ token_id, user_id: user._id });
-            const { password, ...responseUser } = user._doc
-            return  res.json(reply.success("Login Successfully!!", { responseUser, token: token ,status_code:"200"}))
         } catch (err) {
             console.log("err", err)
             return res.json(reply.failed("Something Went Wrong!"))
