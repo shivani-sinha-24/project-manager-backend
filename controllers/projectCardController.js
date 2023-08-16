@@ -87,7 +87,33 @@ export default {
         } catch (err) {
             return res.status(400).send(err)
         }
-    }
+    },
 
+    async updateMultiList(req,res) {
+        try {
+            const {newSourceList_id,newSourceList_items,newDestinationList_id,newDestinationList_items} = req?.body
+            const sourceCard = await ProjectCard.findOneAndUpdate({_id:newSourceList_id},{$set:{items:newSourceList_items}},{new:true})
+            const destinationCard = await ProjectCard.findOneAndUpdate({_id:newDestinationList_id},{$set:{items:newDestinationList_items}},{new:true})
+
+            const lists = await ProjectCard.find({})
+            res.status(200).send({status_code: 200, lists,message:'drag drap success'})
+
+        } catch (error) {
+            res.status(400).send(error)
+        }
+    },
+
+    async updatetSingleList(req,res) {
+        try {
+            const {_id,items} = req?.body
+            
+            const upadtedCard = await ProjectCard.findOneAndUpdate({_id:_id},{$set:{items:items}},{new:true})
+
+            const lists = await ProjectCard.find({})
+            res.status(200).send({status_code: 200, lists,message:'Single list drag drap success'})
+        } catch (error) {
+            res.status(400).send(error)
+        }
+    },
 
 }

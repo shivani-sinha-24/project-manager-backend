@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String
     },
+    projects_assigned:{
+        type: [],
+        default: []
+    }
     // status: {
     //     type: String,
     //     default: "Active",
