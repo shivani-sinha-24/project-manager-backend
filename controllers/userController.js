@@ -135,7 +135,6 @@ export default {
     // Send Mail OTP
     async sendMail(req, res) {
         let data = req.body;
-        //console.log(data);
         let validation = new Validator(data, {
             email: 'required|email',
         });
@@ -177,7 +176,6 @@ export default {
     // Resend OTP
     async resendOtp(req, res, next) {
         let request = req.body;
-        //console.log(request);
         let validation = new Validator(request, {
             email: 'required|email',
         });
@@ -569,7 +567,6 @@ export default {
                         { new: true }
                     );
                     if (users) {
-                        // console.log("users:",users);
                         return res.status(200).send({ status_code: 200, "users": users, message: "User updated successfully." });
                     }
                 } else {
@@ -586,7 +583,6 @@ export default {
                         { new: true }
                     );
                     if (users) {
-                        console.log("users: ", users);
                         return res.status(200).send({ status_code: 200, "users": users, message: "User updated successfully." });
                     }
                 }
@@ -619,7 +615,6 @@ export default {
             if (!request) {
                 return res.json(reply.failed("All input is required"));
             }
-            // console.log(name,description,file);
             const user = await User.findById({ _id: req.user.id });
             if (!user) {
                 return res.json(reply.failed("User not found!!"))
@@ -792,11 +787,6 @@ export default {
         }
     },
 
-    // async getUsersByRole(req,res){
-    //     console.log("tets")
-    //     console.log(req,"req");
-    // },
-
 
     // Reset Password
     async resetPassword(req, res) {
@@ -931,7 +921,6 @@ export default {
             if (teamLead.teamLeader !== request.teamLeader) {
                 const TeamLeader = await User.find({ "name": teamLead.teamLeader });
                 await User.update({ "_id": TeamLeader[0]?._id }, { $unset: { isTeamLeader: "", underTeam: "" } });
-                console.log(request.teamLeader);
                 await User.findOneAndUpdate({ "name": request.teamLeader }, { "isTeamLeader": true, "underTeam": false });
             }
             const removeRecords = await User.find().where('name').in(teamLead.team).exec();
@@ -1006,7 +995,6 @@ export default {
     async checkOtpForClaim(req, res) {
         try {
             let request = req.body;
-            console.log(request);
             const college = await College.findById(request.property_id);
             if (!college) {
                 return res.status(404).send({ message: "College Not Found !!" })

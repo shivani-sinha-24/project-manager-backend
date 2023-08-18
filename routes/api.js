@@ -4,6 +4,7 @@ import Authentication from "../middleware/auth.js";
 import roleAuth from "../middleware/roleAuth.js";
 import ProjectController from "../controllers/projectController.js";
 import ProjectCardController from "../controllers/projectCardController.js";
+import EmpController from "../controllers/EmpController.js";
 import ListItemController from "../controllers/ListItemController.js";
 import ProjectCardListController from "../controllers/projectCardListController.js";
 import multer from 'multer';
@@ -69,7 +70,6 @@ var upload1 = multer({
    fileFilter: (req, file, cb) => {
 
       if (!file) cb("Image is Required", false);
-      console.log(file?.fieldname, "file?.fieldname");
 
       if (file?.fieldname == "logo" || req.files.gallery_img || req.files.featured_img) {
 
@@ -183,30 +183,30 @@ Router.delete("/deleteProject", Authentication, ProjectController.deleteProject)
 
 
 //Send mail for the register.
-Router.post("/sendMailForProject",Authentication,ProjectCardListController.sendMailForProjectInvitation);
+Router.post("/sendMailForProject", Authentication, ProjectCardListController.sendMailForProjectInvitation);
 
 
 
 //PROJECT ROUTES
 Router.get('/getProject', ProjectController.getProject)
-Router.post("/createProject",  ProjectController.createProject);
-Router.put("/updateProject",  ProjectController.updateProject);
-Router.delete("/deleteProject",  ProjectController.deleteProject);
+Router.post("/createProject", ProjectController.createProject);
+Router.put("/updateProject", ProjectController.updateProject);
+Router.delete("/deleteProject", ProjectController.deleteProject);
 Router.get('/get-project/:projectName', ProjectController.getProjectByName)
 
 
 //PROJECT LIST ROUTES
-Router.get("/getProjectCard/:id",  ProjectCardController.getProjectCard);
-Router.get("/getSampleProjectCard",  ProjectCardController.getSampleProjectCard);
-Router.post("/createProjectCard",  ProjectCardController.createProjectCard);
-Router.put("/updateProjectCards",  ProjectCardController.updateProjectCards);
-Router.delete("/deleteProjectCards",  ProjectCardController.deleteProjectCards);
+Router.get("/getProjectCard/:id", ProjectCardController.getProjectCard);
+Router.get("/getSampleProjectCard", ProjectCardController.getSampleProjectCard);
+Router.post("/createProjectCard", ProjectCardController.createProjectCard);
+Router.put("/updateProjectCards", ProjectCardController.updateProjectCards);
+Router.delete("/deleteProjectCards", ProjectCardController.deleteProjectCards);
 
 // LIST ITEMS Routes
-Router.get("/getListItem",  ListItemController.getListItem);
-Router.post("/createtListItem",  ListItemController.createtListItem);
-Router.put("/updatetListItem",  ListItemController.updatetListItem);
-Router.delete("/deleteListItem",  ListItemController.deleteListItem);
+Router.get("/getListItem", ListItemController.getListItem);
+Router.post("/createtListItem", ListItemController.createtListItem);
+Router.put("/updatetListItem", ListItemController.updatetListItem);
+Router.delete("/deleteListItem", ListItemController.deleteListItem);
 
 // Project Invitatio
 Router.post('/share', InvitationController.share)
@@ -214,10 +214,17 @@ Router.post('/accept-invitation', InvitationController.accept)
 Router.post('/reject-invitation', InvitationController.reject)
 
 // Get User
-Router.get('/user/:email',userController.getUserByEmail)
+Router.get('/user/:email', userController.getUserByEmail)
 
 //Drag and Drop 
-Router.put(`/updateMultiList`,ProjectCardController.updateMultiList)
-Router.put(`/updatetSingleList`,ProjectCardController.updatetSingleList)
+Router.put(`/updateMultiList`, ProjectCardController.updateMultiList)
+Router.put(`/updatetSingleList`, ProjectCardController.updatetSingleList)
+
+//Employee
+Router.post('addEmp',EmpController.addEmp);
+Router.get('getEmpList',EmpController.getEmp);
+Router.post('getEmpDetailsbyId',EmpController.getEmpById);
+Router.delete("/deleteEmp", EmpController.deleteEmp);
+Router.put("/updateEmp", EmpController.updateEmp);
 
 export default Router;

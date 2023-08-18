@@ -44,7 +44,6 @@ export default {
                 const sampleListItem3 = await ListItem.create({name:'List item 3',list_id:newSamplePreojectCard._id})
                 const updatedNewSampleProjectCard = await ProjectCard.findOneAndUpdate({_id:newSamplePreojectCard._id}, { $set: { items: [sampleListItem1._id, sampleListItem2._id,sampleListItem3._id] } }, {new :true})
                 const sample = await ProjectCard.find({name:'Sample List'});
-                // console.log('sample :',sample);
                 res.status(200).json(sample)
             }
         } catch (err) {

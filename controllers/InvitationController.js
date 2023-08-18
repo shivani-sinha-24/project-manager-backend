@@ -108,9 +108,7 @@ export default {
                 //     invited_user:user?.email
                 // })
                 const updateInvitation = await Invitation.findOneAndUpdate({project_id:id,invited_user:user?.email},{$set:{status:'Accepted'}},{new:true})
-                console.log(updateInvitation);
                 const updated_user = await User.findOneAndUpdate({_id:user?.id},{ $addToSet: { projects_assigned: id } }, {new :true})
-
                 return res.status(200).send({message:"Invitation accepted"})
             }else{
                 res.status(400).send({message:'No Invitation Found!!'})

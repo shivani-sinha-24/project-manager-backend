@@ -6,9 +6,7 @@ import Token from "../models/tokenModel.js";
 var Authentication = function (req, res, next) {
 
     var token = req.headers.authorization;
-    // console.log(token);
-    token = token?.split(' ')[1] || null;    
-    // console.log("tk:",token);
+    token = token?.split(' ')[1] || null;   
     var msg = { auth: false, message: 'Unauthenticated' };
 
     if (!token) {

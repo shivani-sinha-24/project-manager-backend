@@ -5,7 +5,6 @@ export default {
     //College Category create
     async createProject(req, res) {
         let request = req.body;
-        // console.log(req?.body);
         let exist = await Project.findOne({ "name": request.name });
         if (exist) {
             return res.status(200).send({ message: 'This name is already exists!' });
@@ -74,7 +73,6 @@ export default {
 
     // Get Project By Name
     async getProjectByName(req, res) {
-        // console.log(req?.params?.projectName);
         try {
             let projects = await Project.findOne({name:req?.params?.projectName});
             return res.status(200).json(projects);
