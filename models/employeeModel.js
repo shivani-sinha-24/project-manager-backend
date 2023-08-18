@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 
 const empSchema = new mongoose.Schema({
     name: {
-        required: true,
         type: String
     },
     fatherName: {
@@ -17,8 +16,8 @@ const empSchema = new mongoose.Schema({
     mobileNo: {
         type: String
     },
-    documentsUploads: {
-        type: Array
+    documents: {
+        type: String
     },
     dateofJoining: {
         type: String

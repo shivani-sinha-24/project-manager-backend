@@ -35,20 +35,27 @@ export default {
     // emp registration:
     async addEmp(req, res) {
         let request = req.body;
-        if (Object.keys(request).length == 0) {
-            return res.json(reply.failed("All input is required!"));
-        }
+        console.log(req?.file);
+        let image = req.files && req?.files['image'] ? req?.files['image'][0] : null;
+        let documents = req.files && req?.files['documents'] ? req?.files['documents'][0] : null;
         request.image = req?.file == undefined ? null : req?.file?.filename != undefined && req?.file?.filename;
         const exist = await Emp.findOne({ "name": request.name }).sort('-created_at')
         if (exist) {
             return res.json(reply.failed('This name is already exists!'));
+        }
+        if (image && documents) {
+            request.image = req?.files['image'][0]?.filename;
+            request.documents = req?.files['documents'][0]?.filename;
+        } else if (image && !documents) {
+            request.image = req?.files['image'][0]?.filename;
+        } else if (documents && !image) {
+            request.documents = req?.files['documents'][0]?.filename;
         }
         try {
             if (!exist) {
                 const emp = await Emp.create(request);
                 return res.json(reply.success("Emp Created Successfully!!", { emp }));
             }
-
         } catch (err) {
             console.log("err", err)
             return res.json(reply.failed("Something Went Wrong!"))

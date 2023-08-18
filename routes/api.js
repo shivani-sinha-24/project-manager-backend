@@ -221,9 +221,10 @@ Router.put(`/updateMultiList`, ProjectCardController.updateMultiList)
 Router.put(`/updatetSingleList`, ProjectCardController.updatetSingleList)
 
 //Employee
-Router.post('/addEmp',EmpController.addEmp);
-Router.get('/getEmpList',EmpController.getEmp);
-Router.post('/getEmpDetailsbyId',EmpController.getEmpById);
+const cpUpload = upload.fields([{ name: 'image', maxCount: 1 }, { name: 'documents', maxCount: 1 }])
+Router.post("/addEmp", cpUpload, EmpController.addEmp);
+Router.get('/getEmpList', EmpController.getEmp);
+Router.post('/getEmpDetailsbyId', EmpController.getEmpById);
 Router.delete("/deleteEmp", EmpController.deleteEmp);
 Router.put("/updateEmp", EmpController.updateEmp);
 
