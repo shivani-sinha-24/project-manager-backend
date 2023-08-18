@@ -221,9 +221,9 @@ Router.put(`/updateMultiList`, ProjectCardController.updateMultiList)
 Router.put(`/updatetSingleList`, ProjectCardController.updatetSingleList)
 
 //Employee
-Router.post('addEmp',EmpController.addEmp);
-Router.get('getEmpList',EmpController.getEmp);
-Router.post('getEmpDetailsbyId',EmpController.getEmpById);
+Router.post('/addEmp',EmpController.addEmp);
+Router.get('/getEmpList',EmpController.getEmp);
+Router.post('/getEmpDetailsbyId',EmpController.getEmpById);
 Router.delete("/deleteEmp", EmpController.deleteEmp);
 Router.put("/updateEmp", EmpController.updateEmp);
 
