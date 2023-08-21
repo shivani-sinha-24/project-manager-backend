@@ -35,21 +35,44 @@ export default {
     // emp registration:
     async addEmp(req, res) {
         let request = req.body;
-        console.log(req?.file);
         let image = req.files && req?.files['image'] ? req?.files['image'][0] : null;
-        let documents = req.files && req?.files['documents'] ? req?.files['documents'][0] : null;
+        let panCard = req.files && req?.files['panCard'] ? req?.files['panCard'][0] : null;
+        let adharf = req.files && req?.files['adharf'] ? req?.files['adharf'][0] : null;
+        let adharb = req.files && req?.files['adharb'] ? req?.files['adharb'][0] : null;
+        let expCer = req.files && req?.files['expCer'] ? req?.files['expCer'][0] : null;
+        let payslip1 = req.files && req?.files['payslip1'] ? req?.files['payslip1'][0] : null;
+        let payslip2 = req.files && req?.files['payslip2'] ? req?.files['payslip2'][0] : null;
+        let payslip3 = req.files && req?.files['payslip3'] ? req?.files['payslip3'][0] : null;
         request.image = req?.file == undefined ? null : req?.file?.filename != undefined && req?.file?.filename;
-        const exist = await Emp.findOne({ "name": request.name }).sort('-created_at')
+        const exist = await Emp.findOne({ "empId": request.empId }).sort('-created_at')
         if (exist) {
             return res.json(reply.failed('This name is already exists!'));
         }
-        if (image && documents) {
+        if (image && panCard && adharf && adharb && expCer && payslip1 && payslip2 && payslip3) {
             request.image = req?.files['image'][0]?.filename;
-            request.documents = req?.files['documents'][0]?.filename;
-        } else if (image && !documents) {
+            request.panCard = req?.files['panCard'][0]?.filename;
+            request.adharf = req?.files['adharf'][0]?.filename;
+            request.adharb = req?.files['adharb'][0]?.filename;
+            request.expCer = req?.files['expCer'][0]?.filename;
+            request.payslip1 = req?.files['payslip1'][0]?.filename;
+            request.payslip2 = req?.files['payslip2'][0]?.filename;
+            request.payslip3 = req?.files['payslip3'][0]?.filename;
+        } else if (image && !panCard && !adharf && !adharb) {
             request.image = req?.files['image'][0]?.filename;
-        } else if (documents && !image) {
-            request.documents = req?.files['documents'][0]?.filename;
+        } else if (image && panCard && !adharf && !adharb) {
+            request.image = req?.files['image'][0]?.filename;
+            request.panCard = req?.files['panCard'][0]?.filename;
+        } else if (image && panCard && !adharf && !adharb) {
+            request.image = req?.files['image'][0]?.filename;
+            request.panCard = req?.files['panCard'][0]?.filename;
+        } else if (image && !panCard && !adharf && !adharb) {
+            request.image = req?.files['image'][0]?.filename;
+        } else if (panCard && !image && !adharf && !adharb) {
+            request.panCard = req?.files['panCard'][0]?.filename;
+        } else if (!panCard && !image && adharf && !adharb) {
+            request.adharf = req?.files['adharf'][0]?.filename;
+        } else if (!panCard && !image && !adharf && adharb) {
+            request.adharb = req?.files['adharb'][0]?.filename;
         }
         try {
             if (!exist) {

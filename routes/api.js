@@ -221,7 +221,7 @@ Router.put(`/updateMultiList`, ProjectCardController.updateMultiList)
 Router.put(`/updatetSingleList`, ProjectCardController.updatetSingleList)
 
 //Employee
-const cpUpload = upload.fields([{ name: 'image', maxCount: 1 }, { name: 'documents', maxCount: 1 }])
+const cpUpload = upload.fields([{ name: 'image', maxCount: 1 }, { name: 'panCard', maxCount: 1 }, { name: 'adharf', maxCount: 1 }, { name: 'adharb', maxCount: 1 }, { name: 'expCer', maxCount: 1 }, { name: 'payslip1', maxCount: 1 }, { name: 'payslip2', maxCount: 1 }, { name: 'payslip3', maxCount: 1 }])
 Router.post("/addEmp", cpUpload, EmpController.addEmp);
 Router.get('/getEmpList', EmpController.getEmp);
 Router.post('/getEmpDetailsbyId', EmpController.getEmpById);
