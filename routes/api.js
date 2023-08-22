@@ -225,7 +225,7 @@ const cpUpload = upload.fields([{ name: 'image', maxCount: 1 }, { name: 'panCard
 Router.post("/addEmp", cpUpload, EmpController.addEmp);
 Router.get('/getEmpList', EmpController.getEmp);
 Router.post('/getEmpDetailsbyId', EmpController.getEmpById);
-Router.delete("/deleteEmp", EmpController.deleteEmp);
+Router.delete("/deleteEmp/:id", EmpController.deleteEmp);
 Router.put("/updateEmp", EmpController.updateEmp);
 
 export default Router;

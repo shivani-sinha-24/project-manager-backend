@@ -108,7 +108,7 @@ export default {
     // Delete Emp:
     async deleteEmp(req, res) {
         try {
-            let id = req.query.id
+            let id = req.params.id
             const emp = await Emp.findByIdAndRemove(id)
             if (!emp) {
                 return res.status(404).send({ message: "Employee not found" })
