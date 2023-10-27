@@ -93,7 +93,7 @@ var upload1 = multer({
 });
 
 
-
+Router.get("/",(req,res)=>res.send("Hello world, project manager backend"))
 // ##### User-Router #####
 
 //USER CREATE
